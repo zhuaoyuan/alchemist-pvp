@@ -1,0 +1,72 @@
+group 'com.pdd.service'
+version '0.0.1-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'base'
+
+ext {
+	frameworkParentVersion = '1.1.6'
+	springBootVersion = '1.5.9.RELEASE'
+}
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+		dependencyManagementPluginVersion = '0.6.1.RELEASE'
+	}
+	repositories {
+
+		mavenLocal()
+
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+		classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
+	}
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'base'
+	apply plugin: "io.spring.dependency-management"
+
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+
+	tasks.withType(JavaCompile) {
+		options.encoding = "UTF-8"
+	}
+
+	configurations {
+		all*.exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+	}
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		jcenter()
+	}
+
+	sourceSets {
+		main {
+			resources {
+				srcDirs = ["src/main/resources/base"]
+			}
+			test {
+				resources {
+					srcDirs = ["src/test/resources/base"]
+				}
+			}
+		}
+	}
+
+	configurations.all {
+		resolutionStrategy {
+			cacheChangingModulesFor 0, 'seconds'
+		}
+	}
+
+}
+
