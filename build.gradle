@@ -1,4 +1,4 @@
-group 'com.pdd.service'
+group 'com.zhuaoyuan'
 version '0.0.1-SNAPSHOT'
 
 apply plugin: 'java'
@@ -6,7 +6,6 @@ apply plugin: 'idea'
 apply plugin: 'base'
 
 ext {
-	frameworkParentVersion = '1.1.6'
 	springBootVersion = '1.5.9.RELEASE'
 }
 
@@ -16,7 +15,8 @@ buildscript {
 		dependencyManagementPluginVersion = '0.6.1.RELEASE'
 	}
 	repositories {
-
+		jcenter()
+		mavenCentral()
 		mavenLocal()
 
 	}
@@ -44,9 +44,9 @@ subprojects {
 	}
 
 	repositories {
-		mavenLocal()
-		mavenCentral()
 		jcenter()
+		mavenCentral()
+		mavenLocal()
 	}
 
 	sourceSets {

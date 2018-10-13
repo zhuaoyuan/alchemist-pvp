@@ -1,5 +1,6 @@
 package com.zhuaoyuan.alchemist.server;
 
+import com.zhuaoyuan.alchemist.server.models.Room;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -11,29 +12,33 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ServerEndpoint(value = "/message/{clientId}", configurator = CustomSpringConfigurator.class)
+@ServerEndpoint(value = "/message/{roomId}/{clientName}", configurator = CustomSpringConfigurator.class)
 @Component
 public class SocketServer {
 
-	private Map<String, Map<String, Session>> sessionPool = new ConcurrentHashMap<>(256);
-	private Map<String, String> sessionIDPool = new ConcurrentHashMap<>(256);
+	private Map<String, Session> clientMap = new ConcurrentHashMap<>();
+	private Map<String, String> sessionIDMap = new ConcurrentHashMap<>();
 
-	private Random random = new Random();
+	private Map<String, Room> roomMap = new ConcurrentHashMap<>();
 
 	@OnOpen
 	public void open(Session session,
-					 @PathParam(value="clientId")String clientId){
+					 @PathParam(value="roomId")String roomId,
+					 @PathParam(value="clientName")String clientName){
 		boolean openFlag = true;
 		try {
 			if(session == null ||
-					StringUtils.isEmpty(clientId)) {
+					StringUtils.isEmpty(clientName)) {
 				throw new IllegalArgumentException();
 			}
 
-			sessionPool.putIfAbsent(clientId, new ConcurrentHashMap<>());
+			if(roomMap.putIfAbsent(roomId, new Room())){
 
-			sessionPool.get(clientId).putIfAbsent(session.getId(), session);
-			sessionIDPool.put(session.getId(), clientId);
+			}
+
+			clientMap.putIfAbsent(clientName, session);
+
+			sessionIDMap.put(session.getId(), clientName);
 
 		} catch (Exception e) {
 			openFlag = false;
@@ -62,17 +67,10 @@ public class SocketServer {
     }
 
 
-	public void sendMessage(String message, String appKey) throws Exception {
+	public void sendMessage(String message, String clientName) throws Exception {
 
-		Map<String, Session> sessions = sessionPool.get(appKey);
-		if(sessions == null || sessions.size()==0) {
-			throw new Exception("session not found");
-		}
 		try {
-			String[] keys = sessions.keySet().toArray(new String[0]);
-			String randomKey = keys[random.nextInt(keys.length)];
-
-			syncSendMessage(sessions.get(randomKey),message);
+			syncSendMessage(clientMap.get(clientName), message);
 		} catch (Exception e){
 			throw new Exception("");
 		}
@@ -80,8 +78,8 @@ public class SocketServer {
 
 	private void closeSession(Session session){
 		if(session != null) {
-			String appKey = sessionIDPool.remove(session.getId());
-			sessionPool.get(appKey).remove(session.getId());
+			String clientName = sessionIDMap.remove(session.getId());
+			clientMap.remove(clientName);
 		}
 	}
 
