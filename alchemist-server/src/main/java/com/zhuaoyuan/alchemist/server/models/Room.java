@@ -1,5 +1,7 @@
 package com.zhuaoyuan.alchemist.server.models;
 
+import lombok.Data;
+
 import java.util.List;
 
 @Data

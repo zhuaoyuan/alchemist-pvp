@@ -32,7 +32,7 @@ public class SocketServer {
 				throw new IllegalArgumentException();
 			}
 
-			if(roomMap.putIfAbsent(roomId, new Room())){
+			if(roomMap.putIfAbsent(roomId, new Room()) == null){
 
 			}
 

@@ -15,9 +15,9 @@ buildscript {
 		dependencyManagementPluginVersion = '0.6.1.RELEASE'
 	}
 	repositories {
-		jcenter()
 		mavenCentral()
 		mavenLocal()
+		jcenter()
 
 	}
 	dependencies {
@@ -44,9 +44,9 @@ subprojects {
 	}
 
 	repositories {
-		jcenter()
 		mavenCentral()
 		mavenLocal()
+		jcenter()
 	}
 
 	sourceSets {
