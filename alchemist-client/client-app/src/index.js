@@ -1,22 +1,13 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-import 'wired-elements';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import BeforeBattle from './components/BeforeBattle'
+import * as serviceWorker from './serviceWorker';
 
-const styles = {
-    fontFamily: "sans-serif",
-    padding: "10px"
-};
+ReactDOM.render(<BeforeBattle />, document.getElementById('root'));
 
-const buttonStyles = {
-    background: "lightblue",
-    margin: '0 10px'
-};
-
-const App = () => (
-    <div style={styles}>
-        <wired-input placeholder="Enter name"></wired-input>
-        <wired-button style={buttonStyles}>Submit</wired-button>
-    </div>
-);
-
-render(<App />, document.getElementById("root"));
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
