@@ -9,7 +9,8 @@ export default [{
   }, {
     name: 'watercrash',
     element: 'water'
-  }]
+  }],
+  description: 'Jack the lonely boy.'
 },
   {
     id: 2,
@@ -22,7 +23,8 @@ export default [{
     }, {
       name: 'watercrash',
       element: 'water'
-    }]
+    }],
+    description: 'Bill the roger.'
   },
   {
     id: 3,
@@ -35,6 +37,7 @@ export default [{
     }, {
       name: 'watercrash',
       element: 'water'
-    }]
+    }],
+    description: 'Eric the great wizard.'
   }
 ];

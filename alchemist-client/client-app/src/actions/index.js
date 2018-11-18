@@ -4,6 +4,11 @@ export const toggleBeforeBattleSelect = id => ({
 });
 
 export const toggleBeforeBattleHover = id => ({
-  type: 'TOGGLE_BEFORE_BATTLE_Hover',
+  type: 'TOGGLE_BEFORE_BATTLE_HOVER',
   id
+});
+
+export const joinRoomRequest = () => ({
+  type: 'CREATE_ROOM',
+  localPlayer: 'x'
 });

@@ -1,0 +1,5 @@
+export default {
+  NO_ROOM: 'NO_ROOM',
+  WAITING_IN_ROOM: 'WAITING_IN_ROOM',
+  ROOM_FULL: 'ROOM_FULL'
+};

@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ServerEndpoint(value = "/message/{roomId}/{clientName}", configurator = CustomSpringConfigurator.class)
+@ServerEndpoint(value = "/", configurator = CustomSpringConfigurator.class)
 @Component
 public class SocketServer {
 
@@ -22,33 +22,8 @@ public class SocketServer {
 	private Map<String, Room> roomMap = new ConcurrentHashMap<>();
 
 	@OnOpen
-	public void open(Session session,
-					 @PathParam(value="roomId")String roomId,
-					 @PathParam(value="clientName")String clientName){
-		boolean openFlag = true;
-		try {
-			if(session == null ||
-					StringUtils.isEmpty(clientName)) {
-				throw new IllegalArgumentException();
-			}
+	public void open(Session session){
 
-			if(roomMap.putIfAbsent(roomId, new Room()) == null){
-
-			}
-
-			clientMap.putIfAbsent(clientName, session);
-
-			sessionIDMap.put(session.getId(), clientName);
-
-		} catch (Exception e) {
-			openFlag = false;
-		}
-		try {
-			if(!openFlag && session != null) {
-				session.close();
-			}
-		} catch (IOException e) {
-		}
 	}
 
 
