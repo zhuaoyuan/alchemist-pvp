@@ -1,0 +1,1 @@
+export const MAX_SELECTED_CARD_NUM = 2;

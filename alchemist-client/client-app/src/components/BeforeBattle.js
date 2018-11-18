@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import 'wired-elements';
-import CardBox from './CardBox'
+import BeforeBattleCardBox from './CardBox'
 
 class BeforeBattle extends Component {
   render() {
     return (
-            <CardBox />
+            <BeforeBattleCardBox />
         );
   }
 }
